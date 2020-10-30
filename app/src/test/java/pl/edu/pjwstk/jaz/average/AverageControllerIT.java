@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(SpringRunner.class)
 @IntegrationTest
 public class AverageControllerIT {
-    @Test   //to się ma udać
+    @Test
     public void should_calculate_simple_average() {
         var response = given()
                 .param("numbers", "1,2,3,4")
@@ -23,15 +23,47 @@ public class AverageControllerIT {
                 .body(equalTo("Average equals: 2.5"));
 
     }
-    @Test   //to się nie ma udać
-    public void should_not_calculate_simple_average() {
+    @Test
+    public void should_calculate_simple_average_2() {
         var response = given()
-                .param("numbers", "11,1,9,3")
+                .param("numbers", "4,3,1,7,5")
                 .when()
                 .get("/api/average")
                 .then()
                 .statusCode(200)
-                .body(equalTo("Average equals: 5"));
+                .body(equalTo("Average equals: 4"));
+
+    }
+    @Test
+    public void should_calculate_simple_average_3() {
+        var response = given()
+                .param("numbers", "2,1")
+                .when()
+                .get("/api/average")
+                .then()
+                .statusCode(200)
+                .body(equalTo("Average equals: 1.5"));
+
+    }
+    @Test
+    public void should_calculate_simple_average_4() {
+        var response = given()
+                .param("numbers", "2,1,1")
+                .when()
+                .get("/api/average")
+                .then()
+                .statusCode(200)
+                .body(equalTo("Average equals: 1.33"));
+
+    }
+    @Test
+    public void should_calculate_simple_average_5() {
+                given()
+                .when()
+                .get("/api/average")
+                .then()
+                .statusCode(200)
+                .body(equalTo("Please put parameters"));
 
     }
 }
