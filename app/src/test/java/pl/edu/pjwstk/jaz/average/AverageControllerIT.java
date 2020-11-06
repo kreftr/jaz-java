@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class AverageControllerIT {
     @Test
     public void should_calculate_simple_average() {
-        var response = given()
+                given()
                 .param("numbers", "1,2,3,4")
                 .when()
                 .get("/api/average")
@@ -25,7 +25,7 @@ public class AverageControllerIT {
     }
     @Test
     public void should_calculate_simple_average_2() {
-        var response = given()
+                given()
                 .param("numbers", "4,3,1,7,5")
                 .when()
                 .get("/api/average")
@@ -36,7 +36,7 @@ public class AverageControllerIT {
     }
     @Test
     public void should_calculate_simple_average_3() {
-        var response = given()
+                given()
                 .param("numbers", "2,1")
                 .when()
                 .get("/api/average")
@@ -47,7 +47,7 @@ public class AverageControllerIT {
     }
     @Test
     public void should_calculate_simple_average_4() {
-        var response = given()
+                given()
                 .param("numbers", "2,1,1")
                 .when()
                 .get("/api/average")
