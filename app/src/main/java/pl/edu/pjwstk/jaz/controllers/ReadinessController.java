@@ -1,7 +1,9 @@
-package pl.edu.pjwstk.jaz;
+package pl.edu.pjwstk.jaz.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.pjwstk.jaz.models.Test1Entity;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 @RestController
