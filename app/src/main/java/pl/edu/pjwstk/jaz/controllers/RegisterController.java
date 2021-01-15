@@ -4,6 +4,7 @@ package pl.edu.pjwstk.jaz.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pjwstk.jaz.models.User;
 import pl.edu.pjwstk.jaz.requests.RegisterRequest;
@@ -17,10 +18,12 @@ import java.util.Map;
 public class RegisterController {
 
     private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegisterController(UserService userService){
+    public RegisterController(UserService userService, PasswordEncoder passwordEncoder){
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
@@ -31,7 +34,8 @@ public class RegisterController {
 
             if (!userService.findUserByUsername(registerRequest.getUsername()).isPresent()) {
 
-                userService.addUser(new User(registerRequest.getUsername(), registerRequest.getPassword()));
+                userService.addUser(new User(registerRequest.getUsername(),
+                        passwordEncoder.encode(registerRequest.getPassword())));
                 return new ResponseEntity(HttpStatus.CREATED);
 
             } else return new ResponseEntity(HttpStatus.CONFLICT);

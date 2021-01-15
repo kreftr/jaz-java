@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.jaz.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.jaz.models.User;
 import pl.edu.pjwstk.jaz.sessions.UserSession;
@@ -12,11 +13,13 @@ public class AuthenticationService {
 
     private UserService userService;
     private UserSession userSession;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthenticationService(UserService userService, UserSession userSession){
+    public AuthenticationService(UserService userService, UserSession userSession, PasswordEncoder passwordEncoder){
         this.userService = userService;
         this.userSession = userSession;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean login(String username, String password){
@@ -25,7 +28,7 @@ public class AuthenticationService {
 
         if(loginAttempt.isPresent()){
 
-            if(loginAttempt.get().getPassword().equals(password)) {
+            if(passwordEncoder.matches(password, loginAttempt.get().getPassword())) {
 
                 userSession.logIn();
                 userSession.setRole(loginAttempt.get().getRole());
