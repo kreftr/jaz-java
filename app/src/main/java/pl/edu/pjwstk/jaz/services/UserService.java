@@ -46,6 +46,10 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public Optional<User> findUserById(Long id){
+        return userRepository.findById(id);
+    }
+
     public Map<String, User> getUsersMap(){
         return userRepository.getUserMap();
     }

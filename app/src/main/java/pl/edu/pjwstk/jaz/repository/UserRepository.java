@@ -2,6 +2,7 @@ package pl.edu.pjwstk.jaz.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.edu.pjwstk.jaz.models.Category;
 import pl.edu.pjwstk.jaz.models.User;
 
 import javax.persistence.EntityManager;
@@ -41,6 +42,18 @@ public class UserRepository {
         } catch (Exception e) {
             user = Optional.empty();
         }
+        return user;
+    }
+
+    @Transactional
+    public Optional<User> findById(Long id){
+        Optional user;
+        try {
+            user = Optional.of(em.find(User.class, id));
+        } catch (Exception e){
+            user = Optional.empty();
+        }
+
         return user;
     }
 

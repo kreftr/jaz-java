@@ -1,6 +1,10 @@
 package pl.edu.pjwstk.jaz.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "`user`")
@@ -16,6 +20,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Auction> auctions = new ArrayList<>();
 
     public User() {}
 
@@ -55,5 +61,11 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<String> getAuthorities(){
+        Set<String> authorities = new HashSet<>();
+        authorities.add(getRole().name());
+        return authorities;
     }
 }

@@ -1,5 +1,6 @@
 package pl.edu.pjwstk.jaz.filters;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import pl.edu.pjwstk.jaz.models.Role;
@@ -17,8 +18,10 @@ import java.io.IOException;
 @Order(2) //sets the order in which filters are executed
 public class AuthorizationFilter extends HttpFilter {
 
+
     private UserSession userSession;
 
+    @Autowired
     public AuthorizationFilter(UserSession userSession) {
         this.userSession = userSession;
     }

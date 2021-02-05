@@ -1,8 +1,10 @@
 package pl.edu.pjwstk.jaz.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.edu.pjwstk.jaz.config.UserAuthentication;
 import pl.edu.pjwstk.jaz.models.User;
 import pl.edu.pjwstk.jaz.sessions.UserSession;
 
@@ -30,8 +32,11 @@ public class AuthenticationService {
 
             if(passwordEncoder.matches(password, loginAttempt.get().getPassword())) {
 
+                SecurityContextHolder.getContext().setAuthentication(new UserAuthentication(loginAttempt.get()));
+
                 userSession.logIn();
                 userSession.setRole(loginAttempt.get().getRole());
+                userSession.setUserId(loginAttempt.get().getId());
                 return true;
             }
             else return false;
@@ -46,7 +51,9 @@ public class AuthenticationService {
 
     public void logOut(){
         userSession.setRole(null);
+        userSession.setUserId(null);
         userSession.logOut();
+        SecurityContextHolder.clearContext();
     }
 
 }

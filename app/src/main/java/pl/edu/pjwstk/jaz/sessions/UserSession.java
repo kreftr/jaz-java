@@ -12,6 +12,7 @@ public class UserSession{
 
 
     private boolean isLogged;
+    private Long userId;
     private Role role;
 
 
@@ -39,5 +40,13 @@ public class UserSession{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

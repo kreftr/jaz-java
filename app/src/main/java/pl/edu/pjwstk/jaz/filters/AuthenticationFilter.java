@@ -1,6 +1,7 @@
 package pl.edu.pjwstk.jaz.filters;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import pl.edu.pjwstk.jaz.sessions.UserSession;
@@ -19,6 +20,7 @@ public class AuthenticationFilter extends HttpFilter {
 
     private UserSession userSession;
 
+    @Autowired
     public AuthenticationFilter(UserSession userSession) {
         this.userSession = userSession;
     }

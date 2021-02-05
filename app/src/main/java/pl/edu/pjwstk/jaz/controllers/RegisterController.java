@@ -4,6 +4,7 @@ package pl.edu.pjwstk.jaz.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pjwstk.jaz.models.User;
@@ -46,6 +47,7 @@ public class RegisterController {
 
     //!------ ADMIN ONLY PERMISSIONS ------!
 
+    @PreAuthorize("hasAuthority(ADMIN)")
     @GetMapping("/admin/remove")            //remove user
     public ResponseEntity remove(@RequestParam(value = "user") String username){
         if(userService.findUserByUsername(username).isPresent()){
@@ -55,6 +57,7 @@ public class RegisterController {
         else return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasAuthority(ADMIN)")
     @GetMapping("/admin/users")             //return users map
     public Map<String, User> getUsersList(){
         return userService.getUsersMap();
